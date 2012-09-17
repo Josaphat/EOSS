@@ -1,11 +1,18 @@
 package commands;
 
 public class OpenCommand implements Command {
+	
+	main.DocumentManager docMan;
+	
+	public OpenCommand(main.DocumentManager dm){
+		docMan = dm;
+	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-
+		// TODO
+		System.out.println("Open!");
+		docMan.open();
 	}
 
 }
