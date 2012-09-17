@@ -126,7 +126,10 @@ public class EditorWindow extends javax.swing.JFrame {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						System.out.println(e.getActionCommand() + " command");
+						String str = "<" + e.getActionCommand() + ">" +
+								"</" + e.getActionCommand()+">";
+						System.out.println(str);
+						textArea.insert(str, textArea.getCaretPosition());
 					}
 				});
 				menu.add(menuItem);
