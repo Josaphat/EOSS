@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -17,13 +16,16 @@ import javax.swing.JTextArea;
  * @author jxv1308
  *
  */
+@SuppressWarnings("serial")
 public class EditorWindow extends javax.swing.JFrame {
 	java.util.ArrayList<String> constructs;
+	main.DocumentManager docsManager;
 	
 	JMenuBar menubar;
 	JTextArea textArea;
 	
-	public EditorWindow(java.util.ArrayList<String> constructs){
+	public EditorWindow(java.util.ArrayList<String> constructs, main.DocumentManager dm){
+		this.docsManager = dm;
 		this.constructs = constructs;
 		
 		/* CREATE MENU BAR */
@@ -33,43 +35,23 @@ public class EditorWindow extends javax.swing.JFrame {
 			JMenu menu = new JMenu("File");
 
 			JMenuItem menuItem = new JMenuItem("Open");
-			menuItem.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO Auto-generated method stub
-					System.out.println("Open command");
-				}
-			});
+			menuItem.addActionListener(new CommandActionListener(
+							new commands.OpenCommand(docsManager)));
 			menu.add(menuItem);
 
 			menuItem = new JMenuItem("Save");
-			menuItem.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO Auto-generated method stub
-					System.out.println("Save command");
-				}
-			});
+			menuItem.addActionListener(new CommandActionListener(
+					new commands.SaveCommand(docsManager)));
 			menu.add(menuItem);
 
 			menuItem = new JMenuItem("Save As...");
-			menuItem.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.println("Save As command");
-				}
-			});
+			menuItem.addActionListener(new CommandActionListener(
+					new commands.SaveAsCommand()));
 			menu.add(menuItem);
 
 			menuItem = new JMenuItem("Exit");
-			menuItem.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.println("Exit command");
-				}
-			});
+			menuItem.addActionListener(new CommandActionListener(
+					new commands.ExitCommand()));
 			menu.add(menuItem);
 
 			this.menubar.add(menu);
@@ -78,41 +60,29 @@ public class EditorWindow extends javax.swing.JFrame {
 			menu = new JMenu("Edit");
 
 			menuItem = new JMenuItem("Cut");
-			menuItem.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.println("Cut command");
-				}
-			});
+			menuItem.addActionListener(new CommandActionListener(
+					new commands.CutCommand()));
 			menu.add(menuItem);
 
 			menuItem = new JMenuItem("Copy");
-			menuItem.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.println("Copy command");
-				}
-			});
+			menuItem.addActionListener(new CommandActionListener(
+					new commands.CopyCommand()));
 			menu.add(menuItem);
 
 			menuItem = new JMenuItem("Paste");
-			menuItem.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.println("Paste command");
-				}
-			});
+			menuItem.addActionListener(new CommandActionListener(
+					new commands.PasteCommand()));
 			menu.add(menuItem);
 
+			menu.addSeparator();
 			menuItem = new JMenuItem("Word-Wrap");
 			menuItem.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+					// TODO Do it better. The changes made here are purely
+					// decoration and should not affect our model.
 					System.out.println("Word-wrap command");
+					textArea.setLineWrap(!textArea.getLineWrap()); // toggle
 				}
 			});
 			menu.add(menuItem);
@@ -121,7 +91,8 @@ public class EditorWindow extends javax.swing.JFrame {
 			menuItem.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e){
-					// TODO Do it better
+					// TODO Do it better. The changes made here are purely
+					// decoration and should not affect our model
 					System.out.println("Tabstop command");
 					int tabsize = textArea.getTabSize();
 					try {
@@ -169,6 +140,7 @@ public class EditorWindow extends javax.swing.JFrame {
 		{
 			this.setLayout(new BorderLayout());
 			textArea = new JTextArea();
+			textArea.setWrapStyleWord(true);
 			JScrollPane areaScrollPane = new JScrollPane(textArea);
 			areaScrollPane.setVerticalScrollBarPolicy(
 					JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
