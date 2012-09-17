@@ -1,6 +1,6 @@
 package main;
 
-public class HmlValidator implements Validator {
+public class HtmlValidator implements Validator {
 
 	@Override
 	public boolean validate() {
