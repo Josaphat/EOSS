@@ -1,3 +1,4 @@
+package main;
 /**
  * The FileBuffer is a collection of Lines. The lines know whether
  * or not they're line-wrapped

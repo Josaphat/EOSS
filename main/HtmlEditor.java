@@ -1,3 +1,4 @@
+package main;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,6 +16,7 @@ public class HtmlEditor {
 				"ol", "ul", "li",
 				"dl", "dt", "dd",
 		};
-		new gui.EditorWindow(new ArrayList<String>(Arrays.asList(constructs)));
+		DocumentManager dm = new DocumentManager();
+		new gui.EditorWindow(new ArrayList<String>(Arrays.asList(constructs)), dm);
 	}
 }

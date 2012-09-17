@@ -1,3 +1,4 @@
+package main;
 /**
  * Interface for the Validator Strategy.
  * 
