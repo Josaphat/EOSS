@@ -1,9 +1,14 @@
 /**
  * The FileBuffer is a collection of Lines. The lines know whether
  * or not they're line-wrapped
- * @author Josaphat Valdivia - josaphat.valdivia@gmail.com
+ * @author jxv1308
  *
  */
 public class FileBuffer {
-	java.util.ArrayList<Line> lines;
+	private java.util.ArrayList<String> lines;
+	private Validator validator;
+	
+	public boolean validate(){
+		return validator.validate();
+	}
 }
